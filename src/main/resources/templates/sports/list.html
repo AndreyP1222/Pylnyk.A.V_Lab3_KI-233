@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Види спорту - МОК</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>МОК</h2>
+                <span>Олімпійський комітет</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a th:href="@{/}" class="nav-item">Головна</a>
+                <a th:href="@{/olympiads}" class="nav-item">Олімпіади</a>
+                <a th:href="@{/sports}" class="nav-item active">Види спорту</a>
+                <a th:href="@{/athletes}" class="nav-item">Спортсмени</a>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-toolbar">
+                <h1>Види спорту</h1>
+                <a th:href="@{/sports/new}" class="btn btn-primary">Додати вид спорту</a>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва</th>
+                        <th>Категорія</th>
+                        <th>Кількість медалей</th>
+                        <th>Олімпіада</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sport : ${sports}">
+                        <td th:text="${sport.id}"></td>
+                        <td th:text="${sport.name}"></td>
+                        <td th:text="${sport.category}"></td>
+                        <td th:text="${sport.medalsCount}"></td>
+                        <td>
+                            <a th:href="@{/olympiads/{id}(id=${sport.olympiad.id})}" 
+                               th:text="${sport.olympiad.name + ' (' + sport.olympiad.year + ')'}"></a>
+                        </td>
+                        <td>
+                            <a th:href="@{/sports/{id}(id=${sport.id})}" class="btn btn-small">Перегляд</a>
+                            <a th:href="@{/sports/{id}/edit(id=${sport.id})}" class="btn btn-small">Редагувати</a>
+                            <form class="delete-form" th:action="@{/sports/{id}/delete(id=${sport.id})}" method="post">
+                                <button type="submit" onclick="return confirm('Ви впевнені?')">Видалити</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+
+</html>

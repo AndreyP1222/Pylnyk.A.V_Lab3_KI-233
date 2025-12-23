@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${athlete.id != null} ? 'Редагування спортсмена' : 'Новий спортсмен'">Спортсмен</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>МОК</h2>
+                <span>Олімпійський комітет</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a th:href="@{/}" class="nav-item">Головна</a>
+                <a th:href="@{/olympiads}" class="nav-item">Олімпіади</a>
+                <a th:href="@{/sports}" class="nav-item">Види спорту</a>
+                <a th:href="@{/athletes}" class="nav-item active">Спортсмени</a>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-toolbar">
+                <h1 th:text="${athlete.id != null} ? 'Редагування спортсмена' : 'Новий спортсмен'"></h1>
+            </div>
+            
+            <form th:action="@{/athletes}" th:object="${athlete}" method="post">
+                <input type="hidden" th:field="*{id}">
+                
+                <div>
+                    <label for="firstName">Ім'я</label>
+                    <input type="text" id="firstName" th:field="*{firstName}" required>
+                </div>
+                
+                <div>
+                    <label for="lastName">Прізвище</label>
+                    <input type="text" id="lastName" th:field="*{lastName}" required>
+                </div>
+                
+                <div>
+                    <label for="country">Країна</label>
+                    <input type="text" id="country" th:field="*{country}" required>
+                </div>
+                
+                <div>
+                    <label for="birthDate">Дата народження</label>
+                    <input type="date" id="birthDate" th:field="*{birthDate}" required>
+                </div>
+                
+                <div>
+                    <label for="goldMedals">Золоті медалі</label>
+                    <input type="number" id="goldMedals" th:field="*{goldMedals}" required min="0">
+                </div>
+                
+                <div>
+                    <label for="silverMedals">Срібні медалі</label>
+                    <input type="number" id="silverMedals" th:field="*{silverMedals}" required min="0">
+                </div>
+                
+                <div>
+                    <label for="bronzeMedals">Бронзові медалі</label>
+                    <input type="number" id="bronzeMedals" th:field="*{bronzeMedals}" required min="0">
+                </div>
+                
+                <div>
+                    <label for="sportId">Вид спорту</label>
+                    <select id="sportId" name="sportId" required>
+                        <option value="">Виберіть вид спорту</option>
+                        <option th:each="sport : ${sports}" 
+                                th:value="${sport.id}" 
+                                th:text="${sport.name + ' (' + sport.olympiad.year + ')'}"
+                                th:selected="${athlete.sport != null && athlete.sport.id == sport.id}"></option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn">Зберегти</button>
+                    <a th:href="@{/athletes}" class="btn btn-secondary">Скасувати</a>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+
+</html>

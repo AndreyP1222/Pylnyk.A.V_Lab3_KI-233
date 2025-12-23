@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>МОК - Міжнародний олімпійський комітет</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>МОК</h2>
+                <span>Олімпійський комітет</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a th:href="@{/}" class="nav-item active">Головна</a>
+                <a th:href="@{/olympiads}" class="nav-item">Олімпіади</a>
+                <a th:href="@{/sports}" class="nav-item">Види спорту</a>
+                <a th:href="@{/athletes}" class="nav-item">Спортсмени</a>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <header class="page-header">
+                <h1>Міжнародний олімпійський комітет</h1>
+                <p class="subtitle">Система управління даними про олімпійські ігри</p>
+            </header>
+            
+            <div class="dashboard-cards">
+                <a th:href="@{/olympiads}" class="card">
+                    <div class="card-icon">O</div>
+                    <div class="card-content">
+                        <h3>Олімпіади</h3>
+                        <p>Перегляд та управління олімпійськими іграми</p>
+                    </div>
+                </a>
+                <a th:href="@{/sports}" class="card">
+                    <div class="card-icon">S</div>
+                    <div class="card-content">
+                        <h3>Види спорту</h3>
+                        <p>Управління видами спорту на олімпіадах</p>
+                    </div>
+                </a>
+                <a th:href="@{/athletes}" class="card">
+                    <div class="card-icon">A</div>
+                    <div class="card-content">
+                        <h3>Спортсмени</h3>
+                        <p>Управління даними про спортсменів</p>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

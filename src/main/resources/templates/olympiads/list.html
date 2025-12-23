@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Олімпіади - МОК</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>МОК</h2>
+                <span>Олімпійський комітет</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a th:href="@{/}" class="nav-item">Головна</a>
+                <a th:href="@{/olympiads}" class="nav-item active">Олімпіади</a>
+                <a th:href="@{/sports}" class="nav-item">Види спорту</a>
+                <a th:href="@{/athletes}" class="nav-item">Спортсмени</a>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-toolbar">
+                <h1>Олімпіади</h1>
+                <a th:href="@{/olympiads/new}" class="btn btn-primary">Додати олімпіаду</a>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва</th>
+                        <th>Рік</th>
+                        <th>Місто</th>
+                        <th>Країна</th>
+                        <th>Сезон</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="olympiad : ${olympiads}">
+                        <td th:text="${olympiad.id}"></td>
+                        <td th:text="${olympiad.name}"></td>
+                        <td th:text="${olympiad.year}"></td>
+                        <td th:text="${olympiad.city}"></td>
+                        <td th:text="${olympiad.country}"></td>
+                        <td th:text="${olympiad.season}"></td>
+                        <td>
+                            <a th:href="@{/olympiads/{id}(id=${olympiad.id})}" class="btn btn-small">Перегляд</a>
+                            <a th:href="@{/olympiads/{id}/edit(id=${olympiad.id})}" class="btn btn-small">Редагувати</a>
+                            <form class="delete-form" th:action="@{/olympiads/{id}/delete(id=${olympiad.id})}" method="post">
+                                <button type="submit" onclick="return confirm('Ви впевнені?')">Видалити</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+
+</html>

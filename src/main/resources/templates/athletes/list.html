@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Спортсмени - МОК</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>МОК</h2>
+                <span>Олімпійський комітет</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a th:href="@{/}" class="nav-item">Головна</a>
+                <a th:href="@{/olympiads}" class="nav-item">Олімпіади</a>
+                <a th:href="@{/sports}" class="nav-item">Види спорту</a>
+                <a th:href="@{/athletes}" class="nav-item active">Спортсмени</a>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-toolbar">
+                <h1>Спортсмени</h1>
+                <a th:href="@{/athletes/new}" class="btn btn-primary">Додати спортсмена</a>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ім'я</th>
+                        <th>Країна</th>
+                        <th>Дата народження</th>
+                        <th>Золото</th>
+                        <th>Срібло</th>
+                        <th>Бронза</th>
+                        <th>Всього</th>
+                        <th>Вид спорту</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="athlete : ${athletes}">
+                        <td th:text="${athlete.id}"></td>
+                        <td th:text="${athlete.fullName}"></td>
+                        <td th:text="${athlete.country}"></td>
+                        <td th:text="${#temporals.format(athlete.birthDate, 'dd.MM.yyyy')}"></td>
+                        <td th:text="${athlete.goldMedals}"></td>
+                        <td th:text="${athlete.silverMedals}"></td>
+                        <td th:text="${athlete.bronzeMedals}"></td>
+                        <td th:text="${athlete.totalMedals}"></td>
+                        <td>
+                            <a th:href="@{/sports/{id}(id=${athlete.sport.id})}" 
+                               th:text="${athlete.sport.name}"></a>
+                        </td>
+                        <td>
+                            <a th:href="@{/athletes/{id}(id=${athlete.id})}" class="btn btn-small">Перегляд</a>
+                            <a th:href="@{/athletes/{id}/edit(id=${athlete.id})}" class="btn btn-small">Редагувати</a>
+                            <form class="delete-form" th:action="@{/athletes/{id}/delete(id=${athlete.id})}" method="post">
+                                <button type="submit" onclick="return confirm('Ви впевнені?')">Видалити</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${athlete.fullName}">Спортсмен</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>МОК</h2>
+                <span>Олімпійський комітет</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a th:href="@{/}" class="nav-item">Головна</a>
+                <a th:href="@{/olympiads}" class="nav-item">Олімпіади</a>
+                <a th:href="@{/sports}" class="nav-item">Види спорту</a>
+                <a th:href="@{/athletes}" class="nav-item active">Спортсмени</a>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <div class="page-toolbar">
+                <h1 th:text="${athlete.fullName}"></h1>
+            </div>
+            
+            <div class="details">
+                <p><strong>ID:</strong> <span th:text="${athlete.id}"></span></p>
+                <p><strong>Ім'я:</strong> <span th:text="${athlete.firstName}"></span></p>
+                <p><strong>Прізвище:</strong> <span th:text="${athlete.lastName}"></span></p>
+                <p><strong>Країна:</strong> <span th:text="${athlete.country}"></span></p>
+                <p><strong>Дата народження:</strong> <span th:text="${#temporals.format(athlete.birthDate, 'dd.MM.yyyy')}"></span></p>
+                <p><strong>Вид спорту:</strong> 
+                    <a th:href="@{/sports/{id}(id=${athlete.sport.id})}" th:text="${athlete.sport.name}"></a>
+                </p>
+                <p><strong>Олімпіада:</strong> 
+                    <a th:href="@{/olympiads/{id}(id=${athlete.sport.olympiad.id})}" 
+                       th:text="${athlete.sport.olympiad.name + ' (' + athlete.sport.olympiad.year + ')'}"></a>
+                </p>
+            </div>
+            
+            <h2>Медалі</h2>
+            <div class="medals-info">
+                <div class="medal gold">
+                    <span class="medal-icon">GOLD</span>
+                    <span class="medal-count" th:text="${athlete.goldMedals}"></span>
+                    <span class="medal-label">Золото</span>
+                </div>
+                <div class="medal silver">
+                    <span class="medal-icon">SILVER</span>
+                    <span class="medal-count" th:text="${athlete.silverMedals}"></span>
+                    <span class="medal-label">Срібло</span>
+                </div>
+                <div class="medal bronze">
+                    <span class="medal-icon">BRONZE</span>
+                    <span class="medal-count" th:text="${athlete.bronzeMedals}"></span>
+                    <span class="medal-label">Бронза</span>
+                </div>
+                <div class="medal total">
+                    <span class="medal-icon">TOTAL</span>
+                    <span class="medal-count" th:text="${athlete.totalMedals}"></span>
+                    <span class="medal-label">Всього</span>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <a th:href="@{/athletes/{id}/edit(id=${athlete.id})}" class="btn btn-primary">Редагувати</a>
+                <a th:href="@{/athletes}" class="btn btn-secondary">Назад до списку</a>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
