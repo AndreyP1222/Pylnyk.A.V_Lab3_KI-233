@@ -1,7 +1,7 @@
 services:
   postgres:
     image: 'postgres:17-alpine'
-    container_name: tpp_rgr_postgres
+    container_name: tpp_lab3_postgres
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -24,7 +24,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - tpp_rgr-network
+      - tpp_lab3-network
     deploy:
       resources:
         limits:
@@ -42,8 +42,8 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - IMAGE_TAG=tpp_rgr
-    container_name: tpp_rgr
+        - IMAGE_TAG=tpp_lab3
+    container_name: tpp_lab3
     environment:
       - DB_URL=jdbc:postgresql://postgres:5432/${DB_NAME}
       - DB_USERNAME=${DB_USER}
@@ -55,7 +55,7 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - tpp_rgr-network
+      - tpp_lab3-network
     deploy:
       resources:
         limits:
@@ -68,5 +68,5 @@ volumes:
   postgres-data:
 
 networks:
-  tpp_rgr-network:
+  tpp_lab3-network:
     driver: bridge
